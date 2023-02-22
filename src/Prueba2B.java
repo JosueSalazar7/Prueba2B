@@ -20,17 +20,43 @@ public class Prueba2B {
     private JLabel Edad;
     private JLabel Marca;
     private JComboBox Marcas;
+    private JComboBox Colores;
+    private JLabel Color;
     Statement ps;
     PreparedStatement st;
 
     public Prueba2B() {
+        Connection con;
+        ResultSet rs;
+        try{
+            con = getConection();
+            ps = con.createStatement();
+            rs = st.executeQuery("SELECT NOM_MARCA FROM MARCAS");
 
+            while (rs.next()){
+                Marcas.addItem(rs.getString("NOM_MARCA"));
+            }
+        }catch (HeadlessException | SQLException f){
+            System.out.println(f);
+        }
+        try{
+            con = getConection();
+            ps = con.createStatement();
+            rs = st.executeQuery("SELECT NOM_COLOR FROM COLORES");
+
+            while (rs.next()){
+                Colores.addItem(rs.getString("NOM_COLOR"));
+            }
+        }catch (HeadlessException | SQLException f){
+            System.out.println(f);
+        }
         Buscar2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Connection con;
                 Actualizar3.setEnabled(true);
                 try {
+
                     con = getConection();
                     ps = con.createStatement();
                     ResultSet rs;
@@ -39,6 +65,8 @@ public class Prueba2B {
                         NomD.setText(rs.getString("NOM_DUENIO"));
                         ApeD.setText(rs.getString("APE_DUENIO"));
                         EdadD.setText(rs.getString("EDAD"));
+                        Marcas.setSelectedItem(rs.getString("NOM_MARCA"));
+                        Colores.setSelectedItem(rs.getString("NOM_COLORES"));
                     }
                 } catch (Exception s) {
 
@@ -51,18 +79,26 @@ public class Prueba2B {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
+                    String marca = Marcas.getSelectedItem().toString();
+                    String color = Colores.getSelectedItem().toString();
                     con2 = getConection();
                     st = con2.prepareStatement("UPDATE DATOS SET NOM_DUENIO = ?, APE_DUENIO = ?, EDAD = ? WHERE CI_DUENIO ="+CID.getText() );
 
                     st.setString(1,NomD.getText());
                     st.setString(2,ApeD.getText());
                     st.setString(3,EdadD.getText());
+                    st.setString(5, marca);
+                    st.setString(6, color);
 
                     System.out.println(ps);
                     int res = st.executeUpdate();
 
                     if(res > 0 ){
                         JOptionPane.showMessageDialog(null,"La actualización se realizado con EXITO!");
+                        CID.setText("");
+                        NomD.setText("");
+                        ApeD.setText("");
+                        EdadD.setText("");
                     }else{
                         JOptionPane.showMessageDialog(null,"Error, datos invalidos!! ERROR !!");
                     }
@@ -77,19 +113,26 @@ public class Prueba2B {
             @Override
             public void actionPerformed(ActionEvent e) {
                 con3 = getConection();
-
+                String marca = Marcas.getSelectedItem().toString();
+                String color = Colores.getSelectedItem().toString();
                 try{
-                    st = con3.prepareStatement("INSERT INTO DATOS(CI_DUENIO,NOM_DUENIO,APE_DUENIO,EDAD) VALUES (?,?,?,?)");
+                    st = con3.prepareStatement("INSERT INTO DATOS(CI_DUENIO,NOM_DUENIO,APE_DUENIO,EDAD,marca,color) VALUES (?,?,?,?,?,?)");
 
                     st.setString(1,CID.getText());
                     st.setString(2,NomD.getText());
                     st.setString(3,ApeD.getText());
                     st.setString(4,EdadD.getText());
+                    st.setString(5, marca);
+                    st.setString(6, color);
 
                     int res = st.executeUpdate();
 
                     if(res > 0){
                         JOptionPane.showMessageDialog(null, "Se creo de manera correta");
+                        CID.setText("");
+                        NomD.setText("");
+                        ApeD.setText("");
+                        EdadD.setText("");
                     }else {
                         JOptionPane.showMessageDialog(null, "No se pudo crear");
                     }
@@ -119,29 +162,7 @@ public class Prueba2B {
                 }
             }
         });
-        Marcas.addActionListener(new ActionListener() {
-            Connection con5;
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                con5 = getConection();
-
-                try {
-                    PreparedStatement pst = null;
-
-                    ps = con5.createStatement();
-                    ResultSet rs;
-                    rs = ps.executeQuery("select * from MARCAS =" + Marcas.getToolTipText() + ";");
-                    while (rs.next()) {
-
-                    }
-
-                    } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-            }
-            });
         };
 
 
