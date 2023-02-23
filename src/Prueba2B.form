@@ -125,17 +125,23 @@
         <constraints>
           <grid row="4" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <model>
+            <item value="Seleccione una marca"/>
+          </model>
+        </properties>
       </component>
-      <component id="d9d82" class="javax.swing.JComboBox" binding="Colores">
+      <component id="24596" class="javax.swing.JComboBox" binding="Colores">
         <constraints>
           <grid row="5" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <model/>
+          <model>
+            <item value="Seleccione un color"/>
+          </model>
         </properties>
       </component>
-      <component id="2fa8e" class="javax.swing.JLabel" binding="Color">
+      <component id="524f3" class="javax.swing.JLabel" binding="Color">
         <constraints>
           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>

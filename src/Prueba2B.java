@@ -31,7 +31,7 @@ public class Prueba2B {
         try{
             con = getConection();
             ps = con.createStatement();
-            rs = st.executeQuery("SELECT NOM_MARCA FROM MARCAS");
+            rs = ps.executeQuery("SELECT NOM_MARCA FROM MARCAS");
 
             while (rs.next()){
                 Marcas.addItem(rs.getString("NOM_MARCA"));
@@ -42,7 +42,7 @@ public class Prueba2B {
         try{
             con = getConection();
             ps = con.createStatement();
-            rs = st.executeQuery("SELECT NOM_COLOR FROM COLORES");
+            rs = ps.executeQuery("SELECT NOM_COLOR FROM COLORES");
 
             while (rs.next()){
                 Colores.addItem(rs.getString("NOM_COLOR"));
@@ -65,8 +65,8 @@ public class Prueba2B {
                         NomD.setText(rs.getString("NOM_DUENIO"));
                         ApeD.setText(rs.getString("APE_DUENIO"));
                         EdadD.setText(rs.getString("EDAD"));
-                        Marcas.setSelectedItem(rs.getString("NOM_MARCA"));
-                        Colores.setSelectedItem(rs.getString("NOM_COLORES"));
+                        Marcas.setSelectedItem(rs.getString("MARCA"));
+                        Colores.setSelectedItem(rs.getString("COLOR"));
                     }
                 } catch (Exception s) {
 
@@ -82,7 +82,7 @@ public class Prueba2B {
                     String marca = Marcas.getSelectedItem().toString();
                     String color = Colores.getSelectedItem().toString();
                     con2 = getConection();
-                    st = con2.prepareStatement("UPDATE DATOS SET NOM_DUENIO = ?, APE_DUENIO = ?, EDAD = ? WHERE CI_DUENIO ="+CID.getText() );
+                    st = con2.prepareStatement("UPDATE DATOS SET NOM_DUENIO = ?, APE_DUENIO = ?, EDAD = ?, MARCA = ?, COLOR = ? WHERE CI_DUENIO ="+CID.getText() );
 
                     st.setString(1,NomD.getText());
                     st.setString(2,ApeD.getText());
@@ -116,7 +116,7 @@ public class Prueba2B {
                 String marca = Marcas.getSelectedItem().toString();
                 String color = Colores.getSelectedItem().toString();
                 try{
-                    st = con3.prepareStatement("INSERT INTO DATOS(CI_DUENIO,NOM_DUENIO,APE_DUENIO,EDAD,marca,color) VALUES (?,?,?,?,?,?)");
+                    st = con3.prepareStatement("INSERT INTO DATOS(CI_DUENIO,NOM_DUENIO,APE_DUENIO,EDAD,MARCA,COLOR) VALUES (?,?,?,?,?,?)");
 
                     st.setString(1,CID.getText());
                     st.setString(2,NomD.getText());
@@ -162,7 +162,6 @@ public class Prueba2B {
                 }
             }
         });
-
         };
 
 
